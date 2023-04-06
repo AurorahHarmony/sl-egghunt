@@ -12,7 +12,20 @@
 </head>
 
 <body class="antialiased">
+    <canvas id="animatedEggsCanvas" style="height: 100vh; width: 100vw; position: fixed; z-index: -1; filter: opacity(0.3);"></canvas>
+    <div class="container pt-5 pb-2">
+        <div class="text-center mb-3 text-light">
+            <h1>Angelbunny's Easter Egg Hunt</h1>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div class="bg-dark text-light rounded-pill px-3 py-2 text-center d-inline-block">Time Remaining: 2hrs 45m 07s</div>
+        </div>
+    </div>
     {{ $slot }}
+    <div class="container text-center text-light pb-5">Sponsored by <a href="#" class="text-light">Zephyr Heights</a>, <a href="#" class="text-light">Neighberry</a></div>
+
+    <script src="/js/animatedEggs.js"></script>
 </body>
 
 </html>
