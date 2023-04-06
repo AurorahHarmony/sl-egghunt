@@ -66,3 +66,26 @@ function animate() {
 // Start the animation
 animate();
 
+// Resize the canvas when the window is resized
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Update the position of the eggs based on the new canvas dimensions
+    for (var i = 0; i < numEggs; i++) {
+        // Get the current egg object
+        var egg = eggs[i];
+
+        // Update the egg's x and y position based on the new canvas dimensions
+        egg.x = egg.x / canvasWidth * canvas.width;
+        egg.y = egg.y / canvasHeight * canvas.height;
+
+        // Update the z position of the egg based on its new position
+        egg.z = egg.z / canvasHeight * canvas.height;
+    }
+}
+
+// Listen for the window resize event
+window.addEventListener("resize", function () {
+    resizeCanvas();
+});
