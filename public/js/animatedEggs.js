@@ -77,11 +77,11 @@ function resizeCanvas() {
         var egg = eggs[i];
 
         // Update the egg's x and y position based on the new canvas dimensions
-        egg.x = egg.x / canvasWidth * canvas.width;
-        egg.y = egg.y / canvasHeight * canvas.height;
+        egg.x = egg.x / canvas.width * canvas.width;
+        egg.y = egg.y / canvas.height * canvas.height;
 
         // Update the z position of the egg based on its new position
-        egg.z = egg.z / canvasHeight * canvas.height;
+        egg.z = egg.z / canvas.height * canvas.height;
     }
 }
 
