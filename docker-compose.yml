@@ -3,22 +3,22 @@ services:
         image: "traefik:v2.9"
         restart: unless-stopped
         command:
-        - "--providers.docker=true"
-        - "--providers.docker.exposedbydefault=false"
-        - "--entrypoints.web.address=:80"
-        - "--entrypoints.websecure.address=:443"
-        - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-        # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-        - "--certificatesresolvers.myresolver.acme.email=aurorahHarmony@gmail.com"
-        - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+            - "--providers.docker=true"
+            - "--providers.docker.exposedbydefault=false"
+            - "--entrypoints.web.address=:80"
+            - "--entrypoints.websecure.address=:443"
+            - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+            # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+            - "--certificatesresolvers.myresolver.acme.email=aurorahHarmony@gmail.com"
+            - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
         ports:
-        - "80:80"
-        - "443:443"
+            - "80:80"
+            - "443:443"
         volumes:
-        - "letsencrypt:/letsencrypt"
-        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+            - "letsencrypt:/letsencrypt"
+            - "/var/run/docker.sock:/var/run/docker.sock:ro"
         networks:
-        - app-network
+            - app-network
 
     app:
         build:
