@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ScoreController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::resource('scores', ScoreController::class);
+
+Route::get('/score/{uuid}', [ScoreController::class, 'show']);
+
+Route::group( ['middleware' => ['auth:sanctum']], function () {
+    Route::post('/score/{uuid}/increment', [ScoreController::class, 'increment']);
 });
