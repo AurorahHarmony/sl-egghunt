@@ -1,11 +1,40 @@
 services:
+    traefik:
+        image: "traefik:v2.9"
+        restart: unless-stopped
+        command:
+        - "--providers.docker=true"
+        - "--providers.docker.exposedbydefault=false"
+        - "--entrypoints.web.address=:80"
+        - "--entrypoints.websecure.address=:443"
+        - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+        # - "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+        - "--certificatesresolvers.myresolver.acme.email=aurorahHarmony@gmail.com"
+        - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+        ports:
+        - "80:80"
+        - "443:443"
+        volumes:
+        - "letsencrypt:/letsencrypt"
+        - "/var/run/docker.sock:/var/run/docker.sock:ro"
+        networks:
+        - app-network
+
     app:
         build:
             context: .
             dockerfile: Dockerfile
         restart: unless-stopped
-        ports:
-            - "80:80"
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.site.rule=Host(`localhost`)"
+            - "traefik.http.services.site.loadbalancer.server.port=80"
+            - "traefik.http.routers.site.entrypoints=websecure"
+            - "traefik.http.routers.site.tls.certresolver=myresolver"
+            - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+            - "traefik.http.routers.redirs.rule=hostregexp(`{host:.+}`)"
+            - "traefik.http.routers.redirs.entrypoints=web"
+            - "traefik.http.routers.redirs.middlewares=redirect-to-https"
         environment:
             - APP_KEY
             - APP_NAME=Egg Hunt
@@ -40,4 +69,5 @@ networks:
 
 volumes:
     database:
+    letsencrypt:
 
