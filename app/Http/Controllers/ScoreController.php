@@ -30,6 +30,7 @@ class ScoreController extends Controller
      */
     public function increment(Request $request, string $uuid) {
         $request->validate([
+            'uud' => 'uuid',
             'username' => 'required',
             'legacy_username' => 'required',
         ]
