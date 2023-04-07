@@ -1,0 +1,9 @@
+node_modules/
+vendor/
+.dockerignore
+.env
+.git
+.eslintignore
+.gitignore
+docker-compose.yaml
+database/database.sqlite

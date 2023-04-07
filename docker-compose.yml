@@ -1,0 +1,43 @@
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        environment:
+            - APP_KEY
+            - APP_NAME=Egg Hunt
+            - APP_ENV=production
+            - APP_DEBUG=false
+            - APP_URL=http://localhost:80
+            - DB_CONNECTION=mysql
+            - DB_HOST=db
+            - DB_DATABASE=egghunt
+            - DB_USERNAME=egghunt
+            - DB_PASSWORD=apassword
+        # volumes:
+            # - ".:/var/www/html"
+        networks:
+            - app-network
+
+    db:
+        image: mariadb
+        restart: unless-stopped
+        environment:
+            - MYSQL_DATABASE=egghunt
+            - MYSQL_USER=egghunt
+            - MYSQL_PASSWORD=apassword
+            - MYSQL_ROOT_PASSWORD=myrootpassword
+        networks:
+            - app-network
+        volumes:
+            - "database:/var/lib/mysql"
+networks:
+    app-network:
+        driver: bridge
+
+volumes:
+    database:
+
