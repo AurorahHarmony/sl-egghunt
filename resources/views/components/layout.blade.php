@@ -11,7 +11,7 @@
 
 </head>
 
-<body class="antialiased">
+<body style="background: linear-gradient(0deg, #0067b1, #3caeff); min-height: 100vh">
     <canvas id="animatedEggsCanvas" style="height: 100vh; width: 100vw; position: fixed; z-index: -1; filter: opacity(0.3);"></canvas>
     <div class="container pt-5 pb-2">
         <div class="text-center mb-3 text-light">
