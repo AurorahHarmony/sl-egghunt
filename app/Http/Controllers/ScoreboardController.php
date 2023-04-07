@@ -2,16 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Score;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
 
 class ScoreboardController extends Controller
 {
     /**
-     * Display an overview with all the scores
+     * Display homepage
      */
-    public function index(Request $request)
+    public function home(Request $request)
     {
-        return view('overview');
+        $highScores = Score::orderByDesc('total_score')->limit(7)->get();
+        $recentScores = Score::orderByDesc('updated_at')->limit(7)->get();
+        return view('overview',[
+            'high_scores' => $highScores,
+            'recent_scores' => $recentScores,
+        ]);
+    }
+
+    /**
+     * Display all scores
+     */
+    public function index(Request $request) {
+        $allScores = Score::orderByDesc('total_score')->get();
+
+        return view('scoreboard', [
+            'all_scores' => $allScores,
+        ]);
     }
 }

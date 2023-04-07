@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $title ? $title . ' - ' : ''}}Angelbunny's Easter Egghunt 2023</title>
+    <title>{{ $title ? $title . ' - ' : ''}}Angel's Egghunt 2023</title>
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
@@ -19,11 +19,11 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            <div class="bg-dark text-light rounded-pill px-3 py-2 text-center d-inline-block">Time Remaining: 2hrs 45m 07s</div>
+            {{-- <div class="bg-dark text-light rounded-pill px-3 py-2 text-center d-inline-block">Time Remaining: 2hrs 45m 07s</div> --}}
         </div>
     </div>
     {{ $slot }}
-    <div class="container text-center text-light pb-5">Sponsored by <a href="#" class="text-light">Zephyr Heights</a>, <a href="#" class="text-light">Neighberry</a></div>
+    <div class="container text-center text-light pb-5">Sponsored by <a href="http://maps.secondlife.com/secondlife/Zephyr%20Heights/19/63/12" class="text-light" target="__blank">Zephyr Heights</a>, <a href="http://maps.secondlife.com/secondlife/Neighberry/135/130/21" class="text-light" target="__blank">Neighberry</a></div>
 
     <script src="/js/animatedEggs.js"></script>
 </body>

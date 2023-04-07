@@ -17,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::get('/', [ScoreboardController::class, 'index']);
+Route::get('/', [ScoreboardController::class, 'home']);
+Route::get('/scoreboard', [ScoreboardController::class, 'index']);
