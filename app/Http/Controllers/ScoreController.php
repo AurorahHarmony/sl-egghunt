@@ -29,19 +29,19 @@ class ScoreController extends Controller
      * Increments the user's score by 1
      */
     public function increment(Request $request, string $uuid) {
-        $request->validate([
-            'uuid' => 'uuid',
-            'username' => 'required',
-            'legacy_username' => 'required',
+        $validated = $request->validate([
+            'uuid' => 'required|uuid',
+            'username' => 'required|string',
+            'legacy_username' => 'required|string',
         ]
         );
 
         $score = Score::firstOrCreate([
-            'user_uuid' => $uuid
+            'user_uuid' => $validated['uuid']
         ]);
 
-        $score->username = $request->username;
-        $score->legacy_username = $request->legacy_username;
+        $score->username = $validated['username'];
+        $score->legacy_username = $validated['legacy_username'];
 
         $score->current_score++;
         $score->total_score++;
