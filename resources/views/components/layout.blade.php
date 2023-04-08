@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $title ? $title . ' - ' : ''}}Angel's Egghunt 2023</title>
+    <title>{{ $title ? $title . ' - ' : ''}}Poni Egghunt 2023</title>
 
     <link rel="icon" href="/img/pink-egg.png">
 
@@ -17,7 +17,7 @@
     <canvas id="animatedEggsCanvas" style="height: 100vh; width: 100vw; position: fixed; z-index: -1; filter: opacity(0.3);"></canvas>
     <div class="container pt-5 pb-2">
         <div class="text-center mb-3 text-light">
-            <h1>Angelbunny's Easter Egg Hunt</h1>
+            <h1 class="fw-bold">Poni Egg Hunt</h1>
         </div>
 
         <div class="d-flex justify-content-center">
