@@ -17,7 +17,7 @@ class ScoreController extends Controller
     public function show(string $uuid)
     {
         // $score = Score::find(1);
-        $score = Score::where('user_uuid', '=', '1')->firstOrFail();
+        $score = Score::where('user_uuid', '=', $uuid)->firstOrFail();
 
         return [
             'status' => 1,
