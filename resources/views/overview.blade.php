@@ -37,8 +37,8 @@
                             {{-- <div class="col-auto">
                                 <img src="https://placehold.co/50x50" class="rounded" height="40" width="40">
                             </div> --}}
-                            <div class="col-auto" style="line-height: 1.25;"><span class="fw-bold">{{$score->username}}</span> found an egg!<br><span class="fw-light text-muted">{{$score->legacy_username}}</span></div>
-                            <div class="col text-end">{{$score->total_score}}</div>
+                            <div class="col-auto" style="line-height: 1.25;"><span class="fw-bold">{{$score->score->username}}</span> found an egg in <span class="fw-bold">{{trim(strtok($score->region, '('))}}</span>!<br><span class="fw-light text-muted">{{$score->score->legacy_username}}</span></div>
+                            <div class="col text-end">{{$score->score->total_score}}</div>
                         </div>
                         <hr class="my-2">
                     {{-- </a> --}}
