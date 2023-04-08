@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CollectionEvent;
 use App\Models\Score;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -42,14 +43,33 @@ class ScoreController extends Controller
             'user_uuid' => $validated['uuid']
         ]);
 
+        $egg_id = $request->header('X-SecondLife-Object-Key');
+
+        $minuteDelay = 60; // How many minutes until an egg can be recollected.
+
+        // Check if this egg has already been collected in the last hour. Fail if it has.
+        if ($lastCollection = CollectionEvent::firstWhere([
+            ['updated_score', $score->id],
+            ['egg_id', $egg_id],
+            ['updated_at', '>', Carbon::now()->subHours($minuteDelay)->toDateTimeString()]]))
+            {
+            $remaining = Carbon::createFromTimeString($lastCollection->updated_at)->addMinutes($minuteDelay);
+            return [
+                'status' => 2,
+                'message' => 'You can next collect this egg in ' . $remaining->diffForHumans(Carbon::now(),true, true, 2)
+            ];
+        }
+
+        // Update user details and score
         $score->username = $validated['username'];
         $score->legacy_username = $validated['legacy_username'];
 
         $score->current_score++;
         $score->total_score++;
 
+        // Get info about egg to store in event log.
         $collectionEvent = new CollectionEvent();
-        $collectionEvent->egg_id = $request->header('X-SecondLife-Object-Key');
+        $collectionEvent->egg_id = $egg_id;
         $collectionEvent->region = $request->header('X-SecondLife-Region');
         $collectionEvent->position = $request->header('X-SecondLife-Local-Position');
         $collectionEvent->score()->associate($score);
