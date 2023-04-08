@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Score extends Model
 {
@@ -14,4 +15,9 @@ class Score extends Model
         'current_score',
         'total_score',
     ];
+
+    public function collectionEvents() :HasMany
+    {
+        return $this->hasMany(CollectionEvent::class);
+    }
 }

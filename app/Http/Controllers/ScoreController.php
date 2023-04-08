@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CollectionEvent;
 use App\Models\Score;
 use Illuminate\Http\Request;
-use Nette\NotImplementedException;
+use Illuminate\Support\Facades\DB;
 
 class ScoreController extends Controller
 {
@@ -29,11 +30,12 @@ class ScoreController extends Controller
      * Increments the user's score by 1
      */
     public function increment(Request $request, string $uuid) {
+        $request->merge(['uuid' => $uuid]);
         $validated = $request->validate([
             'uuid' => 'required|uuid',
             'username' => 'required|string',
             'legacy_username' => 'required|string',
-        ]
+        ],
         );
 
         $score = Score::firstOrCreate([
@@ -46,7 +48,16 @@ class ScoreController extends Controller
         $score->current_score++;
         $score->total_score++;
 
-        $score->save();
+        $collectionEvent = new CollectionEvent();
+        $collectionEvent->egg_id = $request->header('X-SecondLife-Object-Key');
+        $collectionEvent->region = $request->header('X-SecondLife-Region');
+        $collectionEvent->position = $request->header('X-SecondLife-Local-Position');
+        $collectionEvent->score()->associate($score);
+
+        DB::transaction(function() use (&$score, &$collectionEvent) {
+            $score->save();
+            $collectionEvent->save();
+        });
 
         return [
             'status' => 1,
