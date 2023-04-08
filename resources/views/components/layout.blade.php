@@ -7,6 +7,8 @@
 
     <title>{{ $title ? $title . ' - ' : ''}}Angel's Egghunt 2023</title>
 
+    <link rel="icon" href="/img/pink-egg.png">
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 </head>
