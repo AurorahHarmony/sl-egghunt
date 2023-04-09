@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CollectionEvent;
+use App\Models\Purchase;
 use App\Models\Score;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -77,6 +78,69 @@ class ScoreController extends Controller
         DB::transaction(function() use (&$score, &$collectionEvent) {
             $score->save();
             $collectionEvent->save();
+        });
+
+        return [
+            'status' => 1,
+            'uuid' => $score->user_uuid,
+            'current_score' => $score->current_score,
+            'total_score' => $score->total_score,
+        ];
+    }
+
+    public function purchase(Request $request, string $uuid) {
+        $request->merge(['uuid' => $uuid]);
+        $validated = $request->validate(
+            [
+                'uuid' => 'required|uuid', // User's uuid
+                'item_name' => 'required|string',
+                'price' => 'required|integer|min:0',
+            ],
+        );
+
+        $validated['item_name'] = mb_strtolower(trim($validated['item_name']), 'UTF-8');
+
+        $score = Score::firstOrCreate([
+            'user_uuid' => $validated['uuid']
+        ]);
+
+        // Return Success if already purchased
+        if ($purchased = Purchase::firstWhere([
+            ['updated_score', $score->id],
+            ['item_name', $validated['item_name']]
+        ])) {
+            return [
+                'status' => 1,
+                'uuid' => $score->user_uuid,
+                'message' => 'You have already purchased this item.',
+                'current_score' => $score->current_score,
+                'total_score' => $score->total_score,
+            ];
+        }
+
+        // Check if user can afford it
+        if ($score->current_score < $validated['price']) {
+            return [
+                'status' => 0,
+                'uuid' => $score->user_uuid,
+                'message' => 'You cannot afford this item.',
+                'current_score' => $score->current_score,
+                'total_score' => $score->total_score,
+            ];
+        }
+
+        // Subtract from current store and create purchase record.
+        $score->current_score = $score->current_score - $validated['price'];
+
+        // Add purchase event
+        $purchase = new Purchase();
+        $purchase->item_name = $validated['item_name'];
+        $purchase->price = $validated['price'];
+        $purchase->score()->associate($score);
+
+        DB::transaction(function() use (&$score, &$purchase) {
+            $score->save();
+            $purchase->save();
         });
 
         return [

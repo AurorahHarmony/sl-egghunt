@@ -25,4 +25,5 @@ Route::get('/score/{uuid}', [ScoreController::class, 'show']);
 
 Route::group( ['middleware' => ['auth:sanctum']], function () {
     Route::post('/score/{uuid}/increment', [ScoreController::class, 'increment']);
+    Route::post('/score/{uuid}/purchase', [ScoreController::class, 'purchase']);
 });

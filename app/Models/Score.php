@@ -20,4 +20,9 @@ class Score extends Model
     {
         return $this->hasMany(CollectionEvent::class);
     }
+
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class);
+    }
 }
