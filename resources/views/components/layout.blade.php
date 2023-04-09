@@ -25,7 +25,7 @@
         </div>
     </div>
     {{ $slot }}
-    <div class="container text-center text-light pb-5">Sponsored by <a href="http://maps.secondlife.com/secondlife/Zephyr%20Heights/19/63/12" class="text-light" target="__blank">Zephyr Heights</a>, <a href="http://maps.secondlife.com/secondlife/Neighberry/135/130/21" class="text-light" target="__blank">Neighberry</a></div>
+    <div class="container text-center text-light pb-5">Regions<a href="http://maps.secondlife.com/secondlife/Zephyr%20Heights/19/63/12" class="text-light" target="__blank">Zephyr Heights</a>, <a href="http://maps.secondlife.com/secondlife/Neighberry/135/130/21" class="text-light" target="__blank">Neighberry</a><br><span style="opacity: 0.5;">Hosting provided by: <a href="https://candyhorses.network" class="text-light" target="__blank">CandyHorses</a></span></div>
 
     <script src="/js/animatedEggs.js"></script>
 </body>
