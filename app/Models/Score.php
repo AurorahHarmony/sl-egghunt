@@ -36,6 +36,9 @@ class Score extends Model
      */
     public static function eventOver() : bool
     {
+        if (env('EVENT_DISABLED_OVERRIDE', '0') == "1") {
+            return true;
+        }
         return self::getEndDate()->isPast();
     }
 

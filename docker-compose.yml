@@ -36,6 +36,7 @@ services:
             - "traefik.http.routers.redirs.entrypoints=web"
             - "traefik.http.routers.redirs.middlewares=redirect-to-https"
         environment:
+            - EVENT_DISABLED_OVERRIDE=0
             - APP_KEY
             - APP_NAME=Egg Hunt
             - APP_ENV=production
