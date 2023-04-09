@@ -21,7 +21,13 @@
         </div>
 
         <div class="d-flex justify-content-center">
-            {{-- <div class="bg-dark text-light rounded-pill px-3 py-2 text-center d-inline-block">Time Remaining: 2hrs 45m 07s</div> --}}
+            <div class="bg-dark text-light rounded-pill px-3 py-2 text-center d-inline-block">
+                @if (!\App\Models\Score::eventOver())
+                Time Remaining: {{\App\Models\Score::remainingTime()}}
+                @else
+                Event Over
+                @endif
+            </div>
         </div>
     </div>
     {{ $slot }}

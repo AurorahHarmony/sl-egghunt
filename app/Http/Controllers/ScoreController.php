@@ -40,6 +40,14 @@ class ScoreController extends Controller
         ],
         );
 
+        // Check if the event is still running
+        if (Score::eventOver()) {
+            return [
+                'status' => 0,
+                'message' => 'The event is over'
+            ];
+        }
+
         $score = Score::firstOrCreate([
             'user_uuid' => $validated['uuid']
         ]);
@@ -54,7 +62,7 @@ class ScoreController extends Controller
             ['egg_id', $egg_id],
             ['created_at', '>', Carbon::now()->subMinutes($minuteDelay)->toDateTimeString()]]))
             {
-            $remaining = Carbon::createFromTimeString($lastCollection->updated_at)->addMinutes($minuteDelay);
+            $remaining = $lastCollection->updated_at->addMinutes($minuteDelay);
             return [
                 'status' => 2,
                 'message' => 'You can next collect this egg in ' . $remaining->diffForHumans(Carbon::now(),true, true, 2)
