@@ -52,7 +52,7 @@ class ScoreController extends Controller
         if ($lastCollection = CollectionEvent::firstWhere([
             ['updated_score', $score->id],
             ['egg_id', $egg_id],
-            ['updated_at', '>', Carbon::now()->subMinutes($minuteDelay)->toDateTimeString()]]))
+            ['created_at', '>', Carbon::now()->subMinutes($minuteDelay)->toDateTimeString()]]))
             {
             $remaining = Carbon::createFromTimeString($lastCollection->updated_at)->addMinutes($minuteDelay);
             return [
