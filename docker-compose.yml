@@ -37,7 +37,8 @@ services:
             - "traefik.http.routers.redirs.middlewares=redirect-to-https"
         environment:
             - EVENT_DISABLED_OVERRIDE=0
-            - EGG_COLLECTION_DELAY=60 # How many minutes to wait before an egg can be recolected
+            # How many minutes to wait before an egg can be recolected
+            - EGG_COLLECTION_DELAY=60
             - APP_KEY
             - APP_NAME=Egg Hunt
             - APP_ENV=production
