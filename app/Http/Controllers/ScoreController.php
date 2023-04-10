@@ -54,7 +54,7 @@ class ScoreController extends Controller
 
         $egg_id = $request->header('X-SecondLife-Object-Key');
 
-        $minuteDelay = 60; // How many minutes until an egg can be recollected.
+        $minuteDelay = env('EGG_COLLECTION_DELAY', 60); // How many minutes until an egg can be recollected.
 
         // Check if this egg has already been collected in the last hour. Fail if it has.
         if ($lastCollection = CollectionEvent::firstWhere([
